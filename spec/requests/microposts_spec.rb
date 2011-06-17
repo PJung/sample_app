@@ -36,6 +36,36 @@ describe "Microposts" do
           response.should have_selector("span.content", :content => content)
         end.should change(Micropost, :count).by(1)
       end
+      
+      it "should have a micropost counting sidebar" do
+        
+        content = "Lorem ipsum dolor sit amet"
+        visit root_path
+        fill_in :micropost_content, :with => content
+        click_button
+        response.should have_selector("span.microposts", :content => "1 micropost")
+      end
     end
+    
+    describe "pluralize microposts" do
+      
+      before(:each) do
+        content = "Lorem ipsum dolor sit amet"
+        visit root_path
+        fill_in :micropost_content, :with => content
+        click_button
+      end
+      
+      it "should have a correctly pluralizing sidebar" do
+        
+        content = "Lorem ipsum dolor sit amet"
+        visit root_path
+        fill_in :micropost_content, :with => content
+        click_button
+        response.should have_selector("span.microposts", :content => "2 micropost")
+      end
+      
+    end
+    
   end
 end
